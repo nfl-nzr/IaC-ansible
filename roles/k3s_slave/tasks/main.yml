@@ -1,0 +1,9 @@
+# k3s slave bootstrapping
+- name: Create k3s slave
+  ansible.builtin.command: "sh k3s.sh"
+  become: true
+  args:
+    chdir: "{{k3s_install_script_path}}"
+  environment: 
+    K3S_TOKEN: "{{k3s_join_token}}"
+    K3S_URL: "https://{{hostvars[groups['masters'][0]].ansible_host}}:6443"

@@ -1,0 +1,9 @@
+# Updated and upgrade
+- name: APT update
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+- name: APT upgrade
+  become: true
+  ansible.builtin.apt:
+    upgrade: yes

@@ -1,0 +1,9 @@
+# Download k3s init script
+- name: Download installation script
+  ansible.builtin.file:
+    dest: "{{k3s_install_script_path}}"
+    state: directory
+- name: Download installation script
+  ansible.builtin.get_url:
+    url: https://get.k3s.io
+    dest: "{{k3s_install_script_path}}/k3s.sh"

@@ -1,0 +1,22 @@
+---
+# This installs the necessary dependencies.
+- name: Install dependencies
+  ansible.builtin.apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+  loop:
+    - python3-pip
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+  become: true
+- name: Install containerd
+  become: true
+  ansible.builtin.apt:
+    name: containerd
+    state: present
+    update_cache: yes
+  when: install_ctr

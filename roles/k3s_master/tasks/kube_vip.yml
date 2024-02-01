@@ -1,0 +1,15 @@
+- name: Create kubevip manifest folder
+  become: true
+  ansible.builtin.file:
+    path: /var/lib/rancher/k3s/server/manifests/
+    state: directory
+- name: Pull kube-vip image
+  become: true
+  environment:
+    KVVERSION: 0.6.4
+  ansible.builtin.command: "ctr image pull ghcr.io/kube-vip/kube-vip:v{{kvversion}}"
+- name: Copy kube-vip manifests
+  become: true
+  ansible.builtin.template:
+    src: kube-vip-rbac.j2
+    dest: /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yml
