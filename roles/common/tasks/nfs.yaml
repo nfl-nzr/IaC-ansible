@@ -1,0 +1,7 @@
+# Install NFS dependencies
+- name: Install nfs-kernel-server package
+  become: true
+  ansible.legacy.apt:
+    name: nfs-kernel-server
+    state: present
+    update_cache: yes

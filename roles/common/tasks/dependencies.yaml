@@ -1,4 +1,4 @@
----
+
 # This installs the necessary dependencies.
 - name: Install dependencies
   ansible.builtin.apt:
@@ -13,14 +13,12 @@
     - gnupg-agent
     - software-properties-common
   become: true
+
+# Only install containerd in master nodes
 - name: Install containerd
   become: true
   ansible.builtin.apt:
     name: containerd
     state: present
     update_cache: yes
-  when: install_ctr
-- name: Install nfs server components
-  become: true
-  ansible.builtin.apt:
-    name: nfs-kernel-server
+  when: '"masters" in group_names'

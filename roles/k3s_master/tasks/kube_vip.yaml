@@ -6,7 +6,7 @@
 - name: Pull kube-vip image
   become: true
   environment:
-    KVVERSION: 0.6.4
+    KVVERSION: "{{kvversion}}"
   ansible.builtin.command: "ctr image pull ghcr.io/kube-vip/kube-vip:v{{kvversion}}"
 - name: Copy kube-vip manifests
   become: true

@@ -1,0 +1,18 @@
+- hosts: all
+  gather_facts: true
+  vars:
+  roles:
+    - common
+    - k3s_init
+- hosts: masters
+  gather_facts: true
+  vars:
+    k3s_install_script_path: "{{ansible_env.HOME}}/k3s_install_script"
+  roles:
+    - k3s_master
+- hosts: slaves
+  gather_facts: true
+  vars:
+    k3s_install_script_path: "{{ansible_env.HOME}}/k3s_install_script"
+  roles:
+    - k3s_slave
