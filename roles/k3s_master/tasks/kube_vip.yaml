@@ -12,4 +12,4 @@
   become: true
   ansible.builtin.template:
     src: kube-vip-rbac.j2
-    dest: /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yml
+    dest: /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml

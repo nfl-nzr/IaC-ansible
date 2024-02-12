@@ -1,2 +1,2 @@
-group_vars/databases/credentials.yml
+group_vars/databases/credentials.yaml
 .vault_pass

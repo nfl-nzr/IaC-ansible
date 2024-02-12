@@ -21,5 +21,5 @@
   ansible.builtin.command: kubectl apply -f https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
 - name: Copy kube-vip configmap
   ansible.builtin.copy:
-    src: kv-configmap-patch.yml
-    dest: "{{ansible_env.HOME}}/kv-configmap-patch.yml"
+    src: kv-configmap-patch.yaml
+    dest: "{{ansible_env.HOME}}/kv-configmap-patch.yaml"

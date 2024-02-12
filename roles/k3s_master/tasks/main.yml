@@ -1,2 +1,0 @@
-- import_tasks: kube_vip.yml
-- import_tasks: k3s_setup.yml

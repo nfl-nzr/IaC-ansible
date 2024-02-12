@@ -20,3 +20,7 @@
     state: present
     update_cache: yes
   when: install_ctr
+- name: Install nfs server components
+  become: true
+  ansible.builtin.apt:
+    name: nfs-kernel-server

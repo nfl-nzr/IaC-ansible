@@ -1,9 +1,0 @@
-ansible_user : nfl
-k3s_join_token : cGFzczRrM3MK
-db_user: nfln
-db_password: pass4db
-k3s_db: k3s
-k3s_db_compose_path: k3s_db
-tls_san_addr: 192.168.1.110
-kvversion: 0.6.4
-kvinterface: ens18

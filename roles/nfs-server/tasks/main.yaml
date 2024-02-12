@@ -1,0 +1,8 @@
+# Setup NFS server
+  - name: Install NFS server components
+    ansible.builtin.apt:
+      name: nfs-kernel-server
+      state: present
+      update_cache: yes
+    when: '"nfs_servers" in group_names'
+
