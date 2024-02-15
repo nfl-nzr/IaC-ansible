@@ -1,6 +1,6 @@
 # k3s master bootstrapping
 - name: Create k3s master node
-  ansible.builtin.command: "sh k3s.sh --tls-san={{tls_san_addr}} --disable=servicelb"
+  ansible.builtin.command: "sh k3s.sh --disable=servicelb"
   become: true
   args:
     chdir: "{{k3s_install_script_path}}"
@@ -9,17 +9,10 @@
     K3S_TOKEN: "{{k3s_join_token}}"
   when: ansible_hostname == "master-01"
 - name: Add nodes to main master
-  ansible.builtin.command: "sh k3s.sh --tls-san={{tls_san_addr}} --disable=servicelb --server=https://{{hostvars[groups['masters'][0]].ansible_host}}:6443 --token={{k3s_join_token}}"
+  ansible.builtin.command: "sh k3s.sh --disable=servicelb --server=https://{{hostvars[groups['masters'][0]].ansible_host}}:6443 --token={{k3s_join_token}}"
   become: true
   args:
     chdir: "{{k3s_install_script_path}}"
   environment: 
     K3S_TOKEN: "{{k3s_join_token}}"
   when: ansible_hostname != "master-01"
-- name: Install kube-vip-cloud-controller for load balancer.
-  become: true
-  ansible.builtin.command: kubectl apply -f https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
-- name: Copy kube-vip configmap
-  ansible.builtin.copy:
-    src: kv-configmap-patch.yaml
-    dest: "{{ansible_env.HOME}}/kv-configmap-patch.yaml"

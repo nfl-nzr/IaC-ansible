@@ -1,0 +1,10 @@
+ansible_user : nfl
+k3s_join_token : cGFzczRrM3MK
+k3s_db: k3s
+k3s_db_compose_path: k3s_db
+kvversion: 0.6.4
+loadbalancer_available_ips: 192.168.1.150-192.168.1.170
+nfs_dir: /mnt/hdd
+k3s_loadbalancer_ver: v0.14.3
+k3s_storage_ver: v1.6.0
+k3s_install_script_path: "{{ansible_env.HOME}}/k3s_install_script"

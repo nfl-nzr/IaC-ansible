@@ -1,7 +1,17 @@
-# Install NFS dependencies
+# Install NFS client
+- name: Install nfs-kernel-server package
+  become: true
+  ansible.legacy.apt:
+    name: nfs-common
+    state: present
+    update_cache: yes
+  when: '"nfs_servers" not in group_names'
+
+# Install NFS server
 - name: Install nfs-kernel-server package
   become: true
   ansible.legacy.apt:
     name: nfs-kernel-server
     state: present
     update_cache: yes
+  when: '"nfs_servers" in group_names'

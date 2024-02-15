@@ -1,2 +1,1 @@
-- import_tasks: kube_vip.yaml
 - import_tasks: k3s_setup.yaml

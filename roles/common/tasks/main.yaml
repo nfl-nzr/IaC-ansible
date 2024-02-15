@@ -2,4 +2,3 @@
 - import_tasks: dependencies.yaml
 - import_tasks: misc.yaml
 - import_tasks: nfs.yaml
-  when: '"nfs_servers" in group_names'

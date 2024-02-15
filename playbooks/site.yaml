@@ -1,18 +1,44 @@
-- hosts: all
+- name: Common plays
+  tags:
+    - common
+  hosts: all
   gather_facts: true
   vars:
   roles:
     - common
     - k3s_init
-- hosts: masters
+- name: Configure master nodes
+  tags: 
+    - master
+  hosts: masters
   gather_facts: true
   vars:
     k3s_install_script_path: "{{ansible_env.HOME}}/k3s_install_script"
   roles:
-    - k3s_master
-- hosts: slaves
+   - k3s_master
+- name: Configure slave nodes
+  tags:
+    - slave
+  hosts: slaves
   gather_facts: true
   vars:
     k3s_install_script_path: "{{ansible_env.HOME}}/k3s_install_script"
   roles:
-    - k3s_slave
+   - k3s_slave
+- name: Configure load balancer
+  tags:
+    - lb, k3s, master, slave
+  hosts: 
+    - masters
+  gather_facts: true
+  roles:
+   - k3s_loadbalancer
+   - k3s_storage
+# - name: Configure NFS servers
+#   tags:
+#     - nfs
+#   hosts: nfs_servers
+#   gather_facts: true
+#   roles:
+#     - nfs-server
+

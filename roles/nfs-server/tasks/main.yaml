@@ -1,8 +1,34 @@
 # Setup NFS server
-  - name: Install NFS server components
-    ansible.builtin.apt:
-      name: nfs-kernel-server
-      state: present
-      update_cache: yes
-    when: '"nfs_servers" in group_names'
-
+- name: Create nfs mount dir
+  become: true
+  ansible.builtin.file:
+    path: "{{nfs_dir}}"
+    state: directory
+- name: Mount HDD to nfs drive
+  become: true
+  ansible.posix.mount:
+    path: "{{nfs_dir}}"
+    src: /dev/sdc
+    opts: defaults
+    fstype: ext4
+    state: present
+- name: Change nfs directory ownership, group and permissions
+  become: true
+  ansible.builtin.file:
+    state: directory
+    path: "{{nfs_dir}}"
+    owner: nobody
+    group: nogroup
+- name: Start NFS kernel service
+  ansible.builtin.service:
+    name: nfs-kernel-server
+    state: started
+- name: Add access rules 
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/exports"
+    line: "{{nfs_dir}} 192.168.1.1/24(rw,sync,no_subtree_check,no_root_squash) # Allow all users on local network access" 
+    create: true
+- name: Run exportfs
+  become: true
+  ansible.builtin.shell: exportfs -a

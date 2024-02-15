@@ -1,0 +1,17 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: primary
+  namespace: metallb-system
+spec:
+  addresses:
+  - {{ ip_pool }}
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: primary-announcement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - primary
