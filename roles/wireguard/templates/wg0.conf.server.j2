@@ -4,18 +4,22 @@ Address = 10.12.12.1/24
 ListenPort = {{wireguard_port}}
 SaveConfig = true
 
-PostUp = iptables -A INPUT -i wg0 -j ACCEPT
-PostUp = iptables -t nat -I POSTROUTING -o {{ext_iface}} -j MASQUERADE
+PostUp = iptables -t nat -I POSTROUTING 1 -s 10.12.12.0/24 -o {{ext_iface}} -j MASQUERADE
+PostUp = iptables -I INPUT 1 -i wg0 -j ACCEPT
+PostUp = iptables -I FORWARD 1 -i {{ext_iface}} -o wg0 -j ACCEPT
+PostUp = iptables -I FORWARD 1 -i wg0 -o {{ext_iface}} -j ACCEPT
+PostUp = iptables -I INPUT 1 -i {{ext_iface}} -p udp --dport 51820 -j ACCEPT
 PostUp = iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-PostUp = iptables -A INPUT -p udp --dport {{wireguard_port}} -j ACCEPT
-PostUp = iptables -A FORWARD -i wg0 -o {{ext_iface}} -j ACCEPT
+PostUp = iptables -t nat -A PREROUTING -p tcp -i {{ext_iface}} --dport 443 -j DNAT --to 10.12.12.2:443
 
-PostDown = iptables -D FORWARD -i wg0 -o {{ext_iface}} -j ACCEPT
-PostDown = iptables -D INPUT -p tcp --dport 22 -j ACCEPT
-PostDown = iptables -D INPUT -p udp --dport {{wireguard_port}} -j ACCEPT
-PostDown = iptables -t nat -D POSTROUTING -o {{ext_iface}} -j MASQUERADE
+PostDown = iptables -t nat -D POSTROUTING -s 10.12.12.0/24 -o {{ext_iface}} -j MASQUERADE
 PostDown = iptables -D INPUT -i wg0 -j ACCEPT
+PostDown = iptables -D FORWARD -i {{ext_iface}} -o wg0 -j ACCEPT
+PostDown = iptables -D FORWARD -i wg0 -o {{ext_iface}} -j ACCEPT
+PostDown = iptables -D INPUT -i {{ext_iface}} -p udp --dport 51820 -j ACCEPT
+PostDown = iptables -D INPUT -p tcp --dport 22 -j ACCEPT
+PostDown = iptables -t nat -D PREROUTING -p tcp -i ens3 --dport 443 -j DNAT --to 10.12.12.2:443
 
 [Peer]
 PublicKey = {{peer_pubkey}}
-AllowedIPs = 10.12.12.2/24
+AllowedIPs = 10.12.12.0/24, 192.168.1.0/24
