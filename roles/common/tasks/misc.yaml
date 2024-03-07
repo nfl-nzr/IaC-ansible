@@ -1,7 +1,0 @@
-# Aliases
-- name: Add kubectl alias to .bashrc
-  become: true
-  ansible.builtin.lineinfile:
-    path: "{{ansible_env.HOME}}/.bashrc"
-    line: alias k="sudo kubectl"
-    create: true

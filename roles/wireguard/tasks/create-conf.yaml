@@ -1,0 +1,41 @@
+- name: Ensure IP forwarding is enabled
+  become: true
+  ansible.posix.sysctl:
+      name: net.ipv4.ip_forward
+      value: '1'
+      sysctl_set: true
+      state: present
+      reload: true
+
+- name: Get DNS resolver addr
+  ansible.builtin.shell: resolvectl dns eth0 | awk '{print $4}'
+  register: dnscmd
+
+- name: Copy wg0.conf file to server
+  become: true
+  ansible.builtin.template:
+    src: wg0.conf.server.j2
+    dest: /etc/wireguard/wg0.conf
+  vars: 
+    ext_iface: "{{ ansible_default_ipv4.interface | default('eth0') }}"
+    private_key: "{{ wg_privatekey_server }}"
+    peer_pubkey: "{{ wg_pubkey_client }}"
+    wireguard_port: "{{ wireguard_listen_port | default('51820') }}"
+
+- name: Copy wg0.conf file to client
+  become: true
+  ansible.builtin.template:
+    src: wg0.conf.client.j2
+    dest: "{{ansible_env.HOME}}/wg0.client.conf"
+  vars: 
+    client_private_key: "{{ wg_privatekey_client }}"
+    server_pubkey: "{{ wg_pubkey_server }}"
+    server_port: "{{ wireguard_listen_port | default('51820') }}"
+    server_ip: "{{ ansible_host }}"
+    dns: "{{ dnscmd.stdout | default(1.1.1.1) }}" # TODO fix DNS bug
+
+- name: Save client conf locally
+  become: true
+  ansible.builtin.fetch:
+    src: "{{ansible_env.HOME}}/wg0.client.conf"
+    dest: "{{ wg_client_conf_path }}"

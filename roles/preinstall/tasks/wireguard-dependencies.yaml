@@ -1,0 +1,7 @@
+# Install wireguard package
+- name: Install wireguard
+  become: true
+  ansible.legacy.apt:
+    name: wireguard
+    state: present
+    update_cache: yes

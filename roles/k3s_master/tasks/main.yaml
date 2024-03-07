@@ -1,1 +1,5 @@
-- import_tasks: k3s_setup.yaml
+- name: K3S Master setup
+  tags:
+    - k3s
+    - k3s-master
+  import_tasks: k3s_setup.yaml

@@ -1,0 +1,24 @@
+- name: Generate server private key
+  ansible.builtin.command: wg genkey # Generate private key.
+  register: genkey_server
+- name: Generate client private key
+  ansible.builtin.command: wg genkey # Generate private key.
+  register: genkey_client
+- name: Generate server public key
+  ansible.builtin.shell: echo "{{ genkey_server.stdout }}" | wg pubkey # Generate public key.
+  register: pubkey_server
+- name: Generate client public key
+  ansible.builtin.shell: echo "{{ genkey_client.stdout }}" | wg pubkey # Generate public key.
+  register: pubkey_client
+- name:  Save server private key
+  set_fact:
+    wg_privatekey_server: "{{ genkey_server.stdout }}"
+- name:  Save server public key
+  set_fact:
+    wg_pubkey_server: "{{ pubkey_server.stdout }}"
+- name:  Save client private key
+  set_fact:
+    wg_privatekey_client: "{{ genkey_client.stdout }}"
+- name:  Save public key
+  set_fact:
+    wg_pubkey_client: "{{ pubkey_client.stdout }}"

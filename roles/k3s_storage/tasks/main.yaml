@@ -1,3 +1,6 @@
 - name: Configure k3s storage
+  tags:
+    - k3s
+    - k3s-master
   become: true
   ansible.builtin.command: "kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/{{ k3s_storage_ver | default('1.6.0') }}/deploy/longhorn.yaml"

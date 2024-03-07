@@ -1,0 +1,6 @@
+- name: Enable wireguard service
+  become: true
+  ansible.builtin.service:
+    name: wg-quick@wg0.service
+    enabled: true
+    state: started

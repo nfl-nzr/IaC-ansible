@@ -1,0 +1,18 @@
+# Aliases
+- name: Add kubectl alias to .bashrc
+  tags:
+    - k3s-master
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ansible_env.HOME}}/.bashrc"
+    line: alias k="sudo kubectl"
+    create: true
+- name: Copy k3s.yaml to local
+  tags:
+    - k3s-master
+  become: true
+  fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: /home/nfl/.kube/
+    flat: yes
+    validate_checksum: yes

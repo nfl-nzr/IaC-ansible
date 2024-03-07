@@ -1,11 +1,12 @@
-- name: Common plays
+# TODO cleanup tags 
+- name: Preinstall
   tags:
-    - common
+    - preinstall, misc
   hosts: all
   gather_facts: true
   vars:
   roles:
-    - common
+    - preinstall
     - k3s_init
 - name: Configure master nodes
   tags: 
@@ -27,18 +28,26 @@
    - k3s_slave
 - name: Configure load balancer
   tags:
-    - lb, k3s, master, slave
+    - lb, ing, k3s, master, slave
   hosts: 
-    - masters
+    - control-node
   gather_facts: true
   roles:
+   - k3s_ingress
    - k3s_loadbalancer
    - k3s_storage
-# - name: Configure NFS servers
-#   tags:
-#     - nfs
-#   hosts: nfs_servers
-#   gather_facts: true
-#   roles:
-#     - nfs-server
-
+- name: Postinstall
+  tags:
+    - misc, postinstall
+  hosts: 
+    - control-node
+  gather_facts: true
+  roles:
+   - postinstall
+- name: Configure NFS servers
+  tags:
+    - nfs
+  hosts: nfs_servers
+  gather_facts: true
+  roles:
+    - nfs-server

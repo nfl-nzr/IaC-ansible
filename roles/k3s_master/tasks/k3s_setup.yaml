@@ -1,6 +1,6 @@
 # k3s master bootstrapping
 - name: Create k3s master node
-  ansible.builtin.command: "sh k3s.sh --disable=servicelb"
+  ansible.builtin.command: "sh k3s.sh --disable=servicelb --disable=traefik"
   become: true
   args:
     chdir: "{{k3s_install_script_path}}"
@@ -9,7 +9,7 @@
     K3S_TOKEN: "{{k3s_join_token}}"
   when: ansible_hostname == "master-01"
 - name: Add nodes to main master
-  ansible.builtin.command: "sh k3s.sh --disable=servicelb --server=https://{{hostvars[groups['masters'][0]].ansible_host}}:6443 --token={{k3s_join_token}}"
+  ansible.builtin.command: "sh k3s.sh --disable=traefik --disable=servicelb --server=https://{{hostvars[groups['masters'][0]].ansible_host}}:6443 --token={{k3s_join_token}}"
   become: true
   args:
     chdir: "{{k3s_install_script_path}}"

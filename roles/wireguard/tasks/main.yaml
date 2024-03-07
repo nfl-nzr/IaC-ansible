@@ -1,0 +1,15 @@
+- name: Generate keys
+  tags:
+    - wireguard
+    - jump_server
+  import_tasks: keys.yaml
+- name: Create configs
+  tags:
+    - wireguard
+    - jump_server
+  import_tasks: create-conf.yaml
+- name: Start wireguard service
+  tags:
+    - wireguard
+    - jump_server
+  import_tasks: wg-service.yaml

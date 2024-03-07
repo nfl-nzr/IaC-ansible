@@ -5,6 +5,8 @@
     name: "{{item}}"
     state: present
     update_cache: yes
+    tags:
+      - k3s
   loop:
     - python3-pip
     - apt-transport-https

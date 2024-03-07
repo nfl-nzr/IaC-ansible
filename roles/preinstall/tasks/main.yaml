@@ -1,0 +1,21 @@
+- name: Run updates
+  tags:
+    - always
+  import_tasks: updates.yaml
+- name: Install k3s dependencies
+  tags:
+    - k3s
+    - k3s-master
+    - k3s-slave
+  import_tasks: k3s-dependencies.yaml
+- name: Install NFS componenets
+  tags:
+    - nfs
+    - k3s-master
+    - k3s-slave
+  import_tasks: nfs-dependencies.yaml
+- name: Install wireguard componenets
+  tags:
+    - wireguard
+    - jump_server
+  import_tasks: wireguard-dependencies.yaml

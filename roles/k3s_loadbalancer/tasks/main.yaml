@@ -1,8 +1,14 @@
 # Configure metallb
 - name: Install MetalLB loadbalancer
+  tags:
+    - k3s
+    - k3s-master
   become: true
   ansible.builtin.command: "kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/{{ k3s_loadbalancer_ver | default('v0.14.3') }}/config/manifests/metallb-native.yaml"
 - name: Copy metallb IPAddressPool config
+  tags:
+    - k3s
+    - k3s-master
   become: true
   ansible.builtin.template:
     src: metallb-ip-conf.j2
@@ -10,5 +16,8 @@
   vars: 
     ip_pool: "{{ loadbalancer_available_ips | default('192.168.1.150-192.168.1.170') }}"
 - name: Apply loadbalancer config
+  tags:
+    - k3s
+    - k3s-master
   become: true
   ansible.builtin.command: "kubectl apply -f {{ansible_env.HOME}}/ip-conf.yaml"

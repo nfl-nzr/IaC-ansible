@@ -6,4 +6,5 @@ export env var ANSIBLE_VAULT_PASSWORD_FILE=./.vault_pass
 
 # TODO
 [ ] Organize better !!!!
-[ ] Pin versions!!!
+[x] Pin versions!!!
+[ ] Use kubernetes module and add waits.

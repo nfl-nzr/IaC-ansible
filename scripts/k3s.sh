@@ -1,0 +1,1 @@
+ansible-playbook  --ask-become-pass -i hosts.yaml ../playbooks/site.yaml --tags k3s, k3s-master, k3s-slave

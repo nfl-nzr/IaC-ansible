@@ -1,0 +1,5 @@
+- name: Preinstall
+  hosts: jump_server
+  roles:
+    - preinstall
+    - wireguard

@@ -1,5 +1,8 @@
 # k3s slave bootstrapping
 - name: Create k3s slave
+  tags:
+    - k3s
+    - k3s-slave
   ansible.builtin.command: "sh k3s.sh"
   become: true
   args:
