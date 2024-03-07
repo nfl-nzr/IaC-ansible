@@ -1,11 +1,11 @@
-masters:
+jump_server:
   hosts:
     master-01:
-      ansible_host: 54.80.51.193
-        #        #control-node:
-        #   hosts:
-        #     master-01:
-        #       ansible_host: 192.168.1.110
+      ansible_host: 184.73.57.192
+#control-node:
+#   hosts:
+#     master-01:
+#       ansible_host: 192.168.1.110
 # masters:
 #   hosts:
 #     master-01:
