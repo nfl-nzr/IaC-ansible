@@ -16,3 +16,7 @@ nfs_servers:
   hosts:
     server-01 :
       ansible_host: 192.168.1.115
+# control-node:
+#   hosts:
+#     master-01:
+#       ansible_host: 192.168.1.110
