@@ -1,18 +1,26 @@
 masters:
   hosts:
     master-01:
-      ansible_host: 192.168.1.110
-    master-02:
-      ansible_host: 192.168.1.111
-    master-03:
-      ansible_host: 192.168.1.112
-slaves:
-  hosts:
-    slave-01:
-      ansible_host: 192.168.1.113
-    slave-02:
-      ansible_host: 192.168.1.114
-nfs_servers:
-  hosts:
-    server-01 :
-      ansible_host: 192.168.1.115
+      ansible_host: 54.80.51.193
+        #        #control-node:
+        #   hosts:
+        #     master-01:
+        #       ansible_host: 192.168.1.110
+# masters:
+#   hosts:
+#     master-01:
+#       ansible_host: 192.168.1.110
+#     master-02:
+#       ansible_host: 192.168.1.111
+#     master-03:
+#       ansible_host: 192.168.1.112
+# slaves:
+#   hosts:
+#     slave-01:
+#       ansible_host: 192.168.1.113
+#     slave-02:
+#       ansible_host: 192.168.1.114
+# nfs_servers:
+#   hosts:
+#     server-01 :
+#       ansible_host: 192.168.1.115
