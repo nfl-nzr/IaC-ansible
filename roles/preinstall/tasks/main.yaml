@@ -19,3 +19,8 @@
     - wireguard
     - jump_server
   import_tasks: wireguard-dependencies.yaml
+- name: Install docker
+  tags:
+    - docker
+    - jump_server
+  import_tasks: docker-dependencies.yaml
